@@ -32,13 +32,13 @@ app.post('/insert', async (req, res) => {
             res.send(`Value for name ${req.body.name}: ${existingDocument.value}`);
         } else {
             // If document does not exist, fetch data from external API
-            const response = await axios.get('https://favqs.com/api/qotd');
-            const qotdResponse = response.data.quote.body;
-            
+            const response = await axios.get(`https://www.carinfo.app/_next/data/TFwkQkjeSCDePm8-WaFgI/rc-details/${req.body.name}.json?rc=${req.body.name}`);
+            const responseData = response.data;
+
             // Construct the response
             const responseObject = {
                 name: req.body.name,
-                value: qotdResponse
+                value: responseData
             };
 
             // Insert the document into the database
