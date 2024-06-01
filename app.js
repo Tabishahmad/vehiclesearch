@@ -10,8 +10,8 @@ const port = 3000;
 app.use(bodyParser.json());
 
 // MongoDB connection URI
-const uri = 'mongodb://localhost:27017';
-const dbName = 'myTestDb';  // Change this to your database name
+const uri = 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/';
+const dbName = 'myDatabase';  // Change this to your database name
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function connectToDatabase() {
