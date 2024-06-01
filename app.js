@@ -4,20 +4,19 @@ const axios = require('axios');
 const { MongoClient } = require('mongodb');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
 // MongoDB connection URI
-const uri = 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/';
-const dbName = 'myDatabase';  // Change this to your database name
+const uri = process.env.MONGODB_URI || 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/myDatabase';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function connectToDatabase() {
     await client.connect();
     console.log('Connected to MongoDB');
-    return client.db(dbName);
+    return client.db();
 }
 
 app.post('/insert', async (req, res) => {
@@ -36,15 +35,14 @@ app.post('/insert', async (req, res) => {
             const response = await axios.get('https://favqs.com/api/qotd');
             const qotdResponse = response.data.quote.body;
             
-            // Increment the name and construct the response
-            const incrementedName = req.body.name;
+            // Construct the response
             const responseObject = {
-                name: incrementedName,
+                name: req.body.name,
                 value: qotdResponse
             };
 
-             // Insert the document into the database
-             await collection.insertOne(responseObject);
+            // Insert the document into the database
+            await collection.insertOne(responseObject);
 
             // Return the response
             res.json(responseObject);
@@ -55,7 +53,6 @@ app.post('/insert', async (req, res) => {
     }
 });
 
-
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
+    console.log(`Server running on port ${port}`);
 });
