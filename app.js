@@ -23,7 +23,7 @@ async function connectToDatabase() {
 app.post('/insert', async (req, res) => {
     try {
         const db = await connectToDatabase();
-        const collection = db.collection('orders');  // Change this to your collection name
+        const collection = db.collection('values');  // Change this to your collection name
         
         // Check if document with provided name exists
         const existingDocument = await collection.findOne({ name: req.body.name });
