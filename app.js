@@ -36,6 +36,7 @@ app.post('/insert', async (req, res) => {
         } else {
             // If document does not exist, fetch data from external API
             const response = await axios.get(`https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${req.body.name}.json?rc=${req.body.name}`);
+            console.log(`Requesting data from URL: ${url}`);
             const responseData = response.data;
 
             // Construct the response
@@ -51,11 +52,13 @@ app.post('/insert', async (req, res) => {
             res.json(responseObject);
         }
     } catch (error) {
-        console.error('Error processing request:', error);
-        res.status(500).send('Error processing request: ' + error.message);
+        console.error('Error fetching data from external API:', apiError);
+        console.log('API Error Response:', apiError.response ? apiError.response.data : 'No response data');
+        res.status(apiError.response ? apiError.response.status : 500).send('Error fetching data from external API: ' + apiError.message);
     }
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.error('Error processing request:', error);
+    res.status(500).send('Error processing request: ' + error.message);
 });
