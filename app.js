@@ -12,6 +12,9 @@ app.use(bodyParser.json());
 // MongoDB connection URI
 const uri = process.env.MONGODB_URI || 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/myDatabase';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// const uri = 'mongodb://localhost:27017';
+// const dbName = 'myTestDb';  // Change this to your database name
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function connectToDatabase() {
     await client.connect();
