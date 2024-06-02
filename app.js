@@ -24,6 +24,7 @@ async function connectToDatabase() {
 
 app.post('/insert', async (req, res) => {
     try {
+        console.log(`inside insert:`);
         const db = await connectToDatabase();
         const collection = db.collection('values');  // Change this to your collection name
         
