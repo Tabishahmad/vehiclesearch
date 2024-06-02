@@ -35,13 +35,15 @@ app.post('/insert', async (req, res) => {
             res.send(`Value for name ${req.body.name}: ${JSON.stringify(existingDocument.value)}`);
         } else {
             // If document does not exist, fetch data from external API
-            const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${req.body.name}.json?rc=${req.body.name}`;
+            const nameEncoded = encodeURIComponent(req.body.name);
+            const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${nameEncoded}.json?rc=${nameEncoded}`;
             console.log(`Requesting data from URL: ${url}`);
 
             try {
                 const response = await axios.get(url);
+                console.log(`response: ${response}`);
                 const responseData = response.data;
-
+                console.log(`responseData: ${responseData}`);
                 // Construct the response
                 const responseObject = {
                     name: req.body.name,
