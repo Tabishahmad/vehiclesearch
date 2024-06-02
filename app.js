@@ -32,33 +32,39 @@ app.post('/insert', async (req, res) => {
 
         if (existingDocument) {
             // If document exists, return its value
-            res.send(`Value for name ${req.body.name}: ${existingDocument.value}`);
+            res.send(`Value for name ${req.body.name}: ${JSON.stringify(existingDocument.value)}`);
         } else {
             // If document does not exist, fetch data from external API
-            const response = await axios.get(`https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${req.body.name}.json?rc=${req.body.name}`);
+            const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${req.body.name}.json?rc=${req.body.name}`;
             console.log(`Requesting data from URL: ${url}`);
-            const responseData = response.data;
 
-            // Construct the response
-            const responseObject = {
-                name: req.body.name,
-                value: responseData
-            };
+            try {
+                const response = await axios.get(url);
+                const responseData = response.data;
 
-            // Insert the document into the database
-            await collection.insertOne(responseObject);
+                // Construct the response
+                const responseObject = {
+                    name: req.body.name,
+                    value: responseData
+                };
 
-            // Return the response
-            res.json(responseObject);
+                // Insert the document into the database
+                await collection.insertOne(responseObject);
+
+                // Return the response
+                res.json(responseObject);
+            } catch (apiError) {
+                console.error('Error fetching data from external API:', apiError);
+                console.log('API Error Response:', apiError.response ? apiError.response.data : 'No response data');
+                res.status(apiError.response ? apiError.response.status : 500).send('Error fetching data from external API: ' + apiError.message);
+            }
         }
     } catch (error) {
-        console.error('Error fetching data from external API:', apiError);
-        console.log('API Error Response:', apiError.response ? apiError.response.data : 'No response data');
-        res.status(apiError.response ? apiError.response.status : 500).send('Error fetching data from external API: ' + apiError.message);
+        console.error('Error processing request:', error);
+        res.status(500).send('Error processing request: ' + error.message);
     }
 });
 
 app.listen(port, () => {
-    console.error('Error processing request:', error);
-    res.status(500).send('Error processing request: ' + error.message);
+    console.log(`Server running on port ${port}`);
 });
