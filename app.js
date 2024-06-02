@@ -29,13 +29,16 @@ app.post('/insert', async (req, res) => {
         
         // Check if document with provided name exists
         const existingDocument = await collection.findOne({ name: req.body.name });
-
+        console.log(`existingDocument: ${existingDocument}`);
         if (existingDocument) {
             // If document exists, return its value
+            console.log(`match find`);
             res.send(`Value for name ${req.body.name}: ${JSON.stringify(existingDocument.value)}`);
         } else {
             // If document does not exist, fetch data from external API
+            console.log(`req.body.name: ${req.body.name}`);
             const nameEncoded = encodeURIComponent(req.body.name);
+            console.log(`nameEncoded: ${nameEncoded}`);
             const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${nameEncoded}.json?rc=${nameEncoded}`;
             console.log(`Requesting data from URL: ${url}`);
 
