@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Search API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #response {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Welcome to the Vehicle Search App</h1>
+
+    <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Enter a search term">
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const searchTerm = document.getElementById('searchInput').value.trim();
+
+            if (searchTerm) {
+                try {
+                    const response = await fetch('/insert', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name: searchTerm })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log(data); // Log the response data
+                        renderResponse(JSON.stringify(data, null, 2)); // Render the response data as text
+                    } else {
+                        const errorMessage = await response.text();
+                        document.getElementById('response').innerText = 'Error: ' + errorMessage;
+                    }
+                } catch (error) {
+                    document.getElementById('response').innerText = 'Error: ' + error.message;
+                }
+            } else {
+                document.getElementById('response').innerText = 'Please enter a search term';
+            }
+        });
+
+        function renderResponse(data) {
+            const container = document.getElementById('response');
+            container.innerHTML = ''; // Clear previous content
+
+            // Parse JSON data
+            const jsonData = JSON.parse(data);
+
+            // Check if 'insuranceDetails' exists
+            if (jsonData.pageProps && jsonData.pageProps.insuranceDetails && jsonData.pageProps.insuranceDetails.insurance) {
+                // Loop through insurance array
+                jsonData.pageProps.insuranceDetails.insurance.forEach(insurance => {
+                    // Check if 'text' object exists
+                    if (insurance.text && insurance.text.title && insurance.text.subtitle) {
+                        // Create elements to display title and subtitle
+                        const titleDiv = document.createElement('div');
+                        const subtitleDiv = document.createElement('div');
+                        const actionsDiv = document.createElement('div');
+
+                        // Set class for styling
+                        titleDiv.classList.add('title');
+                        subtitleDiv.classList.add('subtitle');
+                        actionsDiv.classList.add('actions');
+
+                        // Set inner text using values from JSON
+                        titleDiv.innerHTML = `<span style="color: red;">Name : - </span>${insurance.text.title}`;
+                        subtitleDiv.innerHTML = `<span style="color: red;">Number : - </span>${insurance.text.subtitle}`;
+                        actionsDiv.innerHTML = `<span style="color: red;">Insurance Details : - </span>${insurance.actions[0].title}`;
+
+                        // Append elements to container
+                        container.appendChild(titleDiv);
+                        container.appendChild(subtitleDiv);
+                        container.appendChild(actionsDiv);
+                    }
+                });
+            }
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

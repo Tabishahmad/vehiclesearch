@@ -10,7 +10,8 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // MongoDB connection URI
-const uri = process.env.MONGODB_URI || 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/myDatabase';
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/myDatabase';
+// const uri = process.env.MONGODB_URI || 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/myDatabase';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function connectToDatabase() {
@@ -20,7 +21,7 @@ async function connectToDatabase() {
 }
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the Vehicle Search API');
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/insert', async (req, res) => {
@@ -44,7 +45,8 @@ app.post('/insert', async (req, res) => {
             // If document exists, return its value
             console.log('Match found');
             log('Match found');
-            res.send(`Value for name ${req.body.name}: ${JSON.stringify(existingDocument.value)}`);
+            // res.send(`Value for name ${req.body.name}: ${JSON.stringify(existingDocument.value)}`);
+            res.json(existingDocument.value);
         } else {
             // If document does not exist, fetch data from external API
             console.log('req.body.name:', req.body.name);
