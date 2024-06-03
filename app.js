@@ -10,8 +10,8 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // MongoDB connection URI
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/myDatabase';
-// const uri = process.env.MONGODB_URI || 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/myDatabase';
+// const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/myDatabase';
+const uri = process.env.MONGODB_URI || 'mongodb+srv://Tabisahmad1:hsibat12@cluster.id9ucfe.mongodb.net/myDatabase';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function connectToDatabase() {
