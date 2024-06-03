@@ -52,7 +52,8 @@ app.post('/insert', async (req, res) => {
             const nameEncoded = encodeURIComponent(req.body.name);
             console.log('nameEncoded:', nameEncoded);
             log(`nameEncoded: ${nameEncoded}`);
-            const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${nameEncoded}.json?rc=${nameEncoded}`;
+            // const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${nameEncoded}.json?rc=${nameEncoded}`;
+            const url = 'https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/DL10CE1429.json?rc=DL10CE1429'
             console.log('Requesting data from URL:', url);
             log(`Requesting data from URL: ${url}`);
 
