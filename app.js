@@ -53,7 +53,7 @@ app.post('/insert', async (req, res) => {
             console.log('nameEncoded:', nameEncoded);
             log(`nameEncoded: ${nameEncoded}`);
             // const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${nameEncoded}.json?rc=${nameEncoded}`;
-            const url = 'https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/DL10CE1429.json?rc=DL10CE1429'
+            const url = 'https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/car-insurance/DL10CE1429.json?details=DL10CE1429'
             // const url ='https://official-joke-api.appspot.com/random_joke';
             console.log('Requesting data from URL:', url);
             log(`Requesting data from URL: ${url}`);
@@ -62,14 +62,8 @@ app.post('/insert', async (req, res) => {
                 const response = await axios.get(url, {
                     headers: {
                         'Content-Type':'application/json',
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-                        'Accept': '*/*',
-                        'Accept-Encoding': 'gzip, deflate, br',
                         'Connection':'keep-alive',
-                        'authority':'www.carinfo.app',
-                        'Host': 'www.carinfo.app',
-                        'method':'GET',
-                        'Cookie':'city=Delhi; cityId=10084; session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Nq6akCwbUBnmIB9B.WO4ge-qPV_qYYwHex7rQaeohVNP2RHuJl9COc1ZUkic3Bp_Jx72ESGVuGajB2QJAE9aQL4YLSkV2c6hwF820QPMEusv1Zx6v82EiKRCqZk8db_BQFfbS3aDtp_OqySK9CZUwuz48ZfVQr3iJRnVOP8aNOgSLIhTGwFYHK00gD7MqZQ6Yu8Eiid06QilRAZUsIzWWxK18-s4jSpJT4pz5MHxBxySOMWSJPOTtmQzIw-RhbzgiMqvgW3RihQDLp1gjIa7k3mwgb4S_6SFBojYN6_fcfazuaoPT2sjO6cA1Z_6W-iTDxlZJnGFkISC76ET518koMIQs6wMT8ICcHVd_pislLmS_30mAHBedlOrpLIHFsQrjb266sf0.FiKnvxenwnP6RvHN_7Q7gA'
+                        'Host': 'www.carinfo.app'
                     }
                 });
                 console.log('response:', response.data);
