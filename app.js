@@ -19,6 +19,10 @@ async function connectToDatabase() {
     return client.db();
 }
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Vehicle Search API');
+});
+
 app.post('/insert', async (req, res) => {
     let logs = '';
 
@@ -27,19 +31,19 @@ app.post('/insert', async (req, res) => {
     }
 
     try {
-        log('inside insert');
-        console.log('inside insert:');
+        log('Inside insert');
+        console.log('Inside insert:');
         const db = await connectToDatabase();
         const collection = db.collection('values');  // Change this to your collection name
         
         // Check if document with provided name exists
         const existingDocument = await collection.findOne({ name: req.body.name });
-        console.log('existingDocument:', existingDocument);
-        log(`existingDocument: ${JSON.stringify(existingDocument)}`);
+        console.log('Existing document:', existingDocument);
+        log(`Existing document: ${JSON.stringify(existingDocument)}`);
         if (existingDocument) {
             // If document exists, return its value
-            console.log('match found');
-            log('match found');
+            console.log('Match found');
+            log('Match found');
             res.send(`Value for name ${req.body.name}: ${JSON.stringify(existingDocument.value)}`);
         } else {
             // If document does not exist, fetch data from external API
@@ -53,7 +57,13 @@ app.post('/insert', async (req, res) => {
             log(`Requesting data from URL: ${url}`);
 
             try {
-                const response = await axios.get(url);
+                const response = await axios.get(url, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                        'Accept': 'application/json, text/plain, */*',
+                        'Referer': 'https://www.carinfo.app/'
+                    }
+                });
                 console.log('response:', response.data);
                 log(`response: ${JSON.stringify(response.data)}`);
                 const responseData = response.data;
@@ -78,7 +88,7 @@ app.post('/insert', async (req, res) => {
             }
         }
     } catch (error) {
-        log(`Error processing request: ${logs}`);
+        log(`Error processing request: ${error}`);
         console.error(logs);
         res.status(500).send('Error processing request: ' + error.message);
     }
