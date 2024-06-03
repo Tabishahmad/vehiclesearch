@@ -61,10 +61,13 @@ app.post('/insert', async (req, res) => {
                 const response = await axios.get(url, {
                     headers: {
                         'Content-Type':'application/json',
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
                         'Accept': '*/*',
                         'Accept-Encoding': 'gzip, deflate, br',
-                        'Connection':'keep-alive'
+                        'Connection':'keep-alive',
+                        'authority':'www.carinfo.app',
+                        'method':'GET',
+                        'Cookie':'city=Delhi; cityId=10084; session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Nq6akCwbUBnmIB9B.WO4ge-qPV_qYYwHex7rQaeohVNP2RHuJl9COc1ZUkic3Bp_Jx72ESGVuGajB2QJAE9aQL4YLSkV2c6hwF820QPMEusv1Zx6v82EiKRCqZk8db_BQFfbS3aDtp_OqySK9CZUwuz48ZfVQr3iJRnVOP8aNOgSLIhTGwFYHK00gD7MqZQ6Yu8Eiid06QilRAZUsIzWWxK18-s4jSpJT4pz5MHxBxySOMWSJPOTtmQzIw-RhbzgiMqvgW3RihQDLp1gjIa7k3mwgb4S_6SFBojYN6_fcfazuaoPT2sjO6cA1Z_6W-iTDxlZJnGFkISC76ET518koMIQs6wMT8ICcHVd_pislLmS_30mAHBedlOrpLIHFsQrjb266sf0.FiKnvxenwnP6RvHN_7Q7gA'
                     }
                 });
                 console.log('response:', response.data);
