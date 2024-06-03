@@ -54,8 +54,8 @@ app.post('/insert', async (req, res) => {
             const nameEncoded = encodeURIComponent(req.body.name);
             console.log('nameEncoded:', nameEncoded);
             log(`nameEncoded: ${nameEncoded}`);
-            // const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${nameEncoded}.json?rc=${nameEncoded}`;
-            const url = 'https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/car-insurance/DL10CE1429.json?details=DL10CE1429'
+            const url = `https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/rc-details/${nameEncoded}.json?rc=${nameEncoded}`;
+            // const url = 'https://www.carinfo.app/_next/data/Ss3I2sprpgaCgbsHipfXw/car-insurance/DL10CE1429.json?details=DL10CE1429'
             // const url ='https://official-joke-api.appspot.com/random_joke';
             console.log('Requesting data from URL:', url);
             log(`Requesting data from URL: ${url}`);
